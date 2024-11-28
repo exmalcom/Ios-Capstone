@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct UserProfile: View {
+    // User information fetched from UserDefaults
     let firstName = UserDefaults.standard.string(forKey: "first name key")
     let lastName = UserDefaults.standard.string(forKey: "last name key")
     let email = UserDefaults.standard.string(forKey: "email key")
+    
+    // Environment variable to dismiss the current view
     @Environment(\.presentationMode) var presentation
     
+    // State variables for notification preferences
     @State var checkedOrderStatus = true
     @State var checkedPasswordChanges = true
     @State var checkedSpetialOffers = true
@@ -20,10 +24,9 @@ struct UserProfile: View {
     
     var body: some View {
         VStack {
-            // Header
+            // Header: Contains back button, logo, and profile image
             HStack {
                 Button {
-                    // Menu()
                     // Need to dismiss current view
                 } label: {
                     Image(systemName: "arrow.backward.circle.fill")
@@ -41,11 +44,10 @@ struct UserProfile: View {
             .padding([.leading, .trailing])
             
             VStack(alignment: .leading) {
-                ScrollView{
+                ScrollView {
                     VStack(alignment: .leading) {
-                        // Personal Info
+                        // Personal Info Section
                         Group {
-                            
                             Text("Personal Information")
                                 .font(Font.system(size: 18, weight: .bold))
                                 .foregroundColor(Color(red: 51/255, green: 51/255, blue: 51/255))
@@ -53,12 +55,15 @@ struct UserProfile: View {
                                 .padding(.top, 12)
                                 .padding(.bottom, 5)
                                 .bold()
+                            
+                            // Avatar
                             Text("Avatar")
                                 .foregroundColor(Color(red: 175/255, green: 175/255, blue: 175/255))
                                 .bold()
                                 .padding([.leading, .trailing], 20)
                             
                             HStack {
+                                // Profile image and action buttons
                                 Image("profile-image-placeholder")
                                     .resizable()
                                     .frame(width: 100, height: 100)
@@ -88,8 +93,9 @@ struct UserProfile: View {
                             .padding(.leading)
                         }
                         
-                        // Texts
+                        // Texts: Display first name, last name, email, and phone number
                         Group {
+                            // Display First Name
                             Text("First name")
                                 .foregroundColor(Color(red: 175/255, green: 175/255, blue: 175/255))
                                 .bold()
@@ -104,6 +110,7 @@ struct UserProfile: View {
                                 )
                                 .padding([.leading, .trailing], 20)
                             
+                            // Display Last Name
                             Text("Last name")
                                 .foregroundColor(Color(red: 175/255, green: 175/255, blue: 175/255))
                                 .bold()
@@ -118,6 +125,7 @@ struct UserProfile: View {
                                 )
                                 .padding([.leading, .trailing], 20)
                             
+                            // Display Email
                             Text("Email")
                                 .foregroundColor(Color(red: 175/255, green: 175/255, blue: 175/255))
                                 .bold()
@@ -132,6 +140,7 @@ struct UserProfile: View {
                                 )
                                 .padding([.leading, .trailing], 20)
                             
+                            // Display Phone Number
                             Text("Phone number")
                                 .foregroundColor(Color(red: 175/255, green: 175/255, blue: 175/255))
                                 .bold()
@@ -145,10 +154,9 @@ struct UserProfile: View {
                                         .stroke(Color(red: 175/255, green: 175/255, blue: 175/255), lineWidth: 1)
                                 )
                                 .padding([.leading, .trailing], 20)
-                            
                         }
                         
-                        // Notifications
+                        // Notifications: Email preferences section
                         Group {
                             Text("Email notifications")
                                 .font(Font.system(size: 18, weight: .bold))
@@ -157,7 +165,9 @@ struct UserProfile: View {
                                 .padding(.top, 10)
                                 .padding(.bottom, 5)
                                 .bold()
-                            HStack{
+                            
+                            // Order Status Notification
+                            HStack {
                                 Image(systemName: checkedOrderStatus ? "checkmark.square.fill" : "square")
                                     .foregroundColor(checkedOrderStatus ? (Color(red: 73/255, green: 94/255, blue: 87/255)) : Color.secondary)
                                     .onTapGesture {
@@ -168,7 +178,9 @@ struct UserProfile: View {
                             }
                             .padding([.leading, .trailing], 20)
                             .padding([.top, .bottom], 5)
-                            HStack{
+                            
+                            // Password Changes Notification
+                            HStack {
                                 Image(systemName: checkedPasswordChanges ? "checkmark.square.fill" : "square")
                                     .foregroundColor(checkedPasswordChanges ? (Color(red: 73/255, green: 94/255, blue: 87/255)) : Color.secondary)
                                     .onTapGesture {
@@ -179,18 +191,22 @@ struct UserProfile: View {
                             }
                             .padding([.leading, .trailing], 20)
                             .padding([.top, .bottom], 5)
-                            HStack{
+                            
+                            // Special Offers Notification
+                            HStack {
                                 Image(systemName: checkedSpetialOffers ? "checkmark.square.fill" : "square")
                                     .foregroundColor(checkedSpetialOffers ? (Color(red: 73/255, green: 94/255, blue: 87/255)) : Color.secondary)
                                     .onTapGesture {
                                         self.checkedSpetialOffers.toggle()
                                     }
-                                Text("Spetial offers")
+                                Text("Special offers")
                                     .foregroundColor(Color(red: 51/255, green: 51/255, blue: 51/255))
                             }
                             .padding([.leading, .trailing], 20)
                             .padding([.top, .bottom], 5)
-                            HStack{
+                            
+                            // Newsletter Notification
+                            HStack {
                                 Image(systemName: checkedNewsletters ? "checkmark.square.fill" : "square")
                                     .foregroundColor(checkedNewsletters ? (Color(red: 73/255, green: 94/255, blue: 87/255)) : Color.secondary)
                                     .onTapGesture {
@@ -200,78 +216,4 @@ struct UserProfile: View {
                                     .foregroundColor(Color(red: 51/255, green: 51/255, blue: 51/255))
                             }
                             .padding([.leading, .trailing], 20)
-                            .padding([.top, .bottom], 5)
-                        }
-                        
-                        // Buttons
-                        Group {
-                            
-                            VStack(alignment: .center){
-                                Button("Log out") {
-                                    UserDefaults.standard.set(false, forKey: kIsLoggedIn)
-                                    self.presentation.wrappedValue.dismiss()
-                                }
-                                .font(Font.system(size: 16, weight: .bold))
-                                .frame(maxWidth: .infinity)
-                                .padding([.top, .bottom], 10)
-                                .foregroundColor(Color(red: 73/255, green: 94/255, blue: 87/255))
-                                .background(Color(red: 244/255, green: 206/255, blue: 20/255))
-                                .cornerRadius(7)
-                                .padding(20)
-                                
-                                HStack {
-                                    Button("Discard changes") {
-                                        // "Discard changes" code here
-                                    }
-                                    .font(Font.system(size: 16, weight: .medium))
-                                    .padding([.leading, .trailing])
-                                    .padding([.top, .bottom], 10)
-                                    .foregroundColor(Color(red: 73/255, green: 94/255, blue: 87/255))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 7)
-                                            .stroke(Color(red: 73/255, green: 94/255, blue: 87/255), lineWidth: 1)
-                                        )
-                                    
-                                    Button("Save changes") {
-                                        // "Save changes" code here
-                                    }
-                                    .font(Font.system(size: 16, weight: .medium))
-                                    
-                                    .padding([.leading, .trailing])
-                                    .padding([.top, .bottom], 10)
-                                    .foregroundColor(Color(red: 237/255, green: 239/255, blue: 238/255))
-                                    .background(Color(red: 73/255, green: 94/255, blue: 87/255))
-                                    .cornerRadius(7)
-                                    .padding(10)
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                        }
-                        
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 7)
-                            .stroke(Color(red: 175/255, green: 175/255, blue: 175/255), lineWidth: 1)
-                        )
-                }
-                // Profile Info, avatar and buttons
-               
-            }
-            .frame(maxWidth: .infinity)
-            .overlay(
-                RoundedRectangle(cornerRadius: 7)
-                    .stroke(Color(red: 175/255, green: 175/255, blue: 175/255), lineWidth: 1)
-                )
-            
-            
-        }
-    }
-}
-
-struct UserProfile_Previews: PreviewProvider {
-    static var previews: some View {
-        UserProfile()
-    }
-}
+                            .padding
